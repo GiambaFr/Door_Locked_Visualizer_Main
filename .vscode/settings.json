@@ -1,0 +1,22 @@
+{
+    "arduino.additionalUrls": "http://arduino.esp8266.com/stable/package_esp8266com_index.json,https://dl.espressif.com/dl/package_esp32_index.json",
+    "files.associations": {
+        "system_error": "cpp",
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "ranges": "cpp",
+        "regex": "cpp",
+        "functional": "cpp",
+        "bitset": "cpp",
+        "mylights.h": "cpp",
+        "mywifi.h": "cpp",
+        "mytime.h": "cpp"
+    }
+}

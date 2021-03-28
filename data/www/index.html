@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>%PROJECT_TITLE%</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+        <script>
+            if (!!window.EventSource) {
+                var source = new EventSource('/events');
+              
+                source.addEventListener('open', function(e) {
+                  console.log("Events Connected");
+                }, false);
+              
+                source.addEventListener('error', function(e) {
+                  if (e.target.readyState != EventSource.OPEN) {
+                    console.log("Events Disconnected");
+                  }
+                }, false);
+              
+                source.addEventListener('message', function(e) {
+                  console.log("message", e.data);
+                }, false);
+              
+                source.addEventListener('lightsOn', function(e) {
+                    console.log("lights_state", e.data);
+                    document.getElementById("lights_state").innerText = e.data;
+                  }, false);
+
+                source.addEventListener('doorClose', function(e) {
+                  console.log("door_state", e.data);
+                  document.getElementById("door_state").innerText = e.data;
+                }, false);
+
+                source.addEventListener('start_stop', function(e) {
+                    console.log("door_state", e.data);
+                    var data = JSON.parse(e.data);
+                    document.getElementById("time_start").innerText = data.start;
+                    document.getElementById("time_stop").innerText = data.stop;
+                  }, false);
+              }
+        </script>
+        
+    </head>
+    <body>
+        <div class="w3-container">
+            <div class="w3-container w3-teal">
+                <h1>%PROJECT_TITLE%</h1>
+            </div>
+            <nav class="w3-bar w3-black">
+                <a class="w3-bar-item w3-button" href="/">Home</a>
+                <a class="w3-bar-item w3-button" href="/wifi_settings.html">Wifi Settings</a>
+            </nav>
+            <div class="w3-container w3-content">
+                <div class="w3-panel w3-white w3-card w3-display-container">
+                    <p class="w3-text-blue">Lights information</p>
+                    <p>Lights enabled from <span id="time_start">%START%</span> to <span id="time_stop">%STOP%</span> - Lights currently <span id="lights_state">%LIGHTS_ON%</span></p>
+                </div>
+                <div class="w3-panel w3-white w3-card w3-display-container">
+                    <p class="w3-text-blue">Door information</p>
+                    <p>The door lock is actualy <span id="door_state">%DOOR_STATE%</span></p>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

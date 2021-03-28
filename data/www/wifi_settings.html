@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>%PROJECT_TITLE% - Settings</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
+    <script>
+        function scanWiFi() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                // Typical action to be performed when the document is ready:
+                    var allData = JSON.parse(xhttp.responseText);
+                    if(allData.length > 0) {
+                        allData.forEach(function(data) {
+                            document.getElementById('wifiNetworks').innerHTML = document.getElementById('wifiNetworks').innerHTML +'<p><a href="#" onclick="selectWifiNetwork(\''+data.ssid+'\')">' + data.ssid + '</a> - ' + data.rssi + 'db - '+ (data.secure>0 ? "secure" : "unsecure") +'</p>';
+                        })
+                        document.getElementById('id01').style.display='block';
+                    } else {
+                        scanWiFi();
+                    }
+                }
+            };
+            xhttp.open("GET", "/scan", true);
+            xhttp.send();
+        }
+        function closeModal() {
+            document.getElementById('id01').style.display='none';
+            document.getElementById('wifiNetworks').innerText = "";
+        }
+        function selectWifiNetwork(ssid) {
+            document.getElementsByName("WIFI_SSID")[0].value = ssid;
+            document.getElementsByName("WIFI_PWD")[0].value = '';
+            closeModal();
+        }
+    </script>
+
+
+    </head>
+    <body>
+        <div class="w3-container">
+            <div class="w3-container w3-teal">
+                <h1>%PROJECT_TITLE%</h1>
+            </div>
+            <nav class="w3-bar w3-black">
+                <a class="w3-bar-item w3-button" href="/">Home</a>
+                <a class="w3-bar-item w3-button active" href="/wifi_settings.html">Wifi Settings</a>
+            </nav>
+            <div class="w3-container w3-content">
+                <p class="w3-opacity"><b>Configuration</b></p> 
+                <div class="w3-panel w3-white w3-card w3-display-container">
+                    <div class="w3-center">
+                        <form method="POST" action="post_config" enctype="application/x-www-form-urlencoded">
+                            <table class="w3-table">
+                                <tr>
+                                    <td>Wifi SSID</td><td><input type="text" name="WIFI_SSID" value="%WIFI_SSID%" maxlength="63" size="20" required/>%WIFI_NETWORKS%<a href="#" onclick="scanWiFi()">scan</a></td>                
+                                </tr>
+                                <tr>
+                                    <td>Wifi password</td><td><input type="text" name="WIFI_PWD" value="%WIFI_PWD%" maxlength="63" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Data Server host</td><td><input type="text" name="DATA_SRV_HOST" value="%DATA_SRV_HOST%" maxlength="63" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Data Server port</td><td><input type="number" name="DATA_SRV_PORT" value="%DATA_SRV_PORT%" min="80" max="65535" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Data Server path</td><td><input type="text" name="DATA_SRV_PATH" value="%DATA_SRV_PATH%" maxlength="63" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Data Server key</td><td><input type="text" name="DATA_SRV_APIKEY" value="%DATA_SRV_APIKEY%" maxlength="63" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Light On time</td><td><input type="time" name="LIGHTS_ON_TIME" value="%LIGHTS_ON_TIME%" size="20" required/></td>
+                                </tr>
+                                <tr>
+                                    <td>Light Off time</td><td><input type="time" name="LIGHTS_OFF_TIME" value="%LIGHTS_OFF_TIME%" size="20" required/></td>
+                                </tr>
+                            </table>
+                            <button class="w3-button w3-block w3-teal" type="submit" value="save">Save</button>
+                        </form>
+                        <a href="/reboot" class="w3-button w3-block w3-teal">Reboot</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+                <!-- The Modal -->
+        <div id="id01" class="w3-modal">
+            <div class="w3-modal-content">
+                <div class="w3-container">
+                    <span onclick="closeModal()"
+                    class="w3-button w3-display-topright">&times;</span>
+                    <div id="wifiNetworks"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
