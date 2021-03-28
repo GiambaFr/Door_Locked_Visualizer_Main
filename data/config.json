@@ -1,0 +1,16 @@
+{
+    "project_name":"Door_Locked_Visualizer",
+    "device_name":"Main controller",
+    "ap_ssid":"AP_SSID",
+    "ap_pwd":"AP_PASS",
+    "sta_ssid":"STA_SSID",
+    "sta_pwd":"STA_PASS",
+    "data_srv_host":"host.example.com",
+    "data_srv_port":443,
+    "data_srv_post_path":"/datalogging/post",
+    "data_srv_apikey":"API_KEY",
+    "ligths_on_time_h":11,
+    "ligths_on_time_mn":1,
+    "ligths_off_time_h":2,
+    "ligths_off_time_mn":1
+}
